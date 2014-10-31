@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Cover Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/cover.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+
+
+          <div class="inner cover">
+            <h1 class="cover-heading">Fastlane Checkout.</h1>
+            <p class="lead">Fastlane Checkout is a method to use Apple Pay to checkout for online purchases in your browser.</p>
+
+
+            <form id="transaction-form" role="form">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                            <label for="exampleInputEmail1">Total Amount</label>
+                            <input type="text" class="form-control" id="transaction-amount" placeholder="Enter Transaction Amount">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-lg btn-default">Checkout</button>
+            </form>
+
+
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Concept created by George Sibble</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+    <script type="application/javascript">
+        $("#transaction-form").submit(function(){
+            console.log('Posting Transaction');
+
+            var amount = $("#transaction-amount").val();
+
+            var transaction_data = {
+                'merchant_id': 1,
+                'merchant_transaction_id': 1,
+                'amount': amount
+            };
+
+            $.ajax("http://127.0.0.1:5002/api/v1/process/start",
+                {
+                    data: JSON.stringify(transaction_data),
+                    contentType : 'application/json',
+                    type : 'POST'
+
+                }
+
+            ).done(function(result){
+                console.log(result);
+            });
+
+            //$.post("http://127.0.0.1:5002/api/v1/process/start", transaction_data, function(result){
+            //    console.log(result);
+            //});
+
+            return false;
+        });
+    </script>
+
+
+  </body>
+</html>
