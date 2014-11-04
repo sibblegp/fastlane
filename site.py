@@ -8,8 +8,12 @@ FASTLANE_SITE = Flask(__name__)
 def show_demo_site():
     return render_template('demo.jinja2')
 
-@FASTLANE_SITE.route('/process/<transaction_id>')
-def process_payment():
+@FASTLANE_SITE.route('/process/<int:transaction_id>')
+def process_payment(transaction_id):
+    user = sql_models.User.get(1)
+    transaction = sql_models.Transaction.get(transaction_id)
+    transaction.claim_for_user(user)
+
     return render_template('process.jinja2')
 
 if __name__ == '__main__':

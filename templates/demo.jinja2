@@ -96,12 +96,10 @@
                 }
 
             ).done(function(result){
-                console.log(result);
-            });
+                console.log(result.transaction_id);
+                window.location = "http://127.0.0.1:5001/process/" + result.transaction_id;
 
-            //$.post("http://127.0.0.1:5002/api/v1/process/start", transaction_data, function(result){
-            //    console.log(result);
-            //});
+            });
 
             return false;
         });

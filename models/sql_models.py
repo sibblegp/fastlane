@@ -38,6 +38,10 @@ class User(BASE):
     first_name = Column(String(30))
     last_name = Column(String(30))
 
+    @classmethod
+    def get(cls, user_id):
+        return SESSION.query(cls).get(user_id)
+
 class Device(BASE):
     __tablename__ = 'devices'
 
@@ -92,11 +96,25 @@ class Transaction(BASE):
 
         return new_transaction
 
+    @classmethod
+    def get(cls, transaction_id):
+        return SESSION.query(cls).get(transaction_id)
+
+    def claim_for_user(self, user):
+        self.user = user
+        add(self)
+        commit()
+
 
 def reset_db():
     session = SESSION_MAKER()
     BASE.metadata.drop_all(ENGINE)
     BASE.metadata.create_all(ENGINE)
+    new_user = User()
+    new_user.first_name = 'George'
+    new_user.last_name = 'Sibble'
+    new_user.urban_airship_alias = 'georgesibble'
+    session.add(new_user)
     new_merchant = Merchant()
     new_merchant.name = 'Test Merchant'
     session.add(new_merchant)
